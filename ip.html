@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Aakash's Web</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="https://akwebcode.tk">
+                <img src="https://akwebcode.tk/assets/img/akash-avtar.png" width="30" height="30"
+                    class="d-inline-block align-top" alt="">
+                Akash's Code
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://akwebcode.tk">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Me</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- <div class="container-fluid mt-3">
+        <button class="btn btn-primary" id="submitBtn" type="button"> -->
+    <span id="buttonSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+    <!-- <span id="buttonText">Check Your IP Details</span>
+        </button> -->
+    </div>
+    <br>
+    <div class="container">
+        <div id="main"></div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        var btnspinner = document.getElementById("buttonSpinner");
+        var btntext = document.getElementById("buttonText");
+        var submitBtn = document.getElementById("submitBtn");
+        function getting1() {
+            // btntext.textContent = "Loading";
+            // submitBtn.disabled = true;
+            btnspinner.classList.remove("d-none");
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "//pro.ip-api.com/json?key=chjtnjQB8SbJ67z", true);
+            xhttp.onload = function () {
+                var IP = JSON.parse(xhttp.responseText)
+                btnspinner.classList.add("d-none");
+                console.log(IP)
+                document.getElementById("main").innerHTML = `
+                <div class="card">
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item"><b>Country</b>: ${IP.country}</li>
+                <li class="list-group-item"><b>State</b>: ${IP.regionName}</li>
+                <li class="list-group-item"><b>Internet Service Provider</b>: <u>${IP.isp}</u></li>
+                <li class="list-group-item"><b>City</b>: ${IP.city}</li>
+                <li class="list-group-item"><b>Zip Code</b>: ${IP.zip}</li>
+                <li class="list-group-item"><b>Latitude</b>: ${IP.lat}</li>
+                <li class="list-group-item"><b>Longitude</b>: ${IP.lon}</li>
+                <li class="list-group-item"><a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&query=${IP.lat},${IP.lon}" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"></path>
+                <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+                </svg> View on Google Map</a></li>
+                <li class="list-group-item"><b>Org.</b>: ${IP.org}</li>
+                <li class="list-group-item"><b>ASN</b>: ${IP.as}</li>
+                <li class="list-group-item"><b>ASN IP</b>: ${IP.query}</li>
+                </ul>
+                </div>
+                        `
+            }
+            xhttp.send();
+        } getting1()
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

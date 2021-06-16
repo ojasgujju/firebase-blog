@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Aakash's Web</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="https://akwebcode.tk">
+            <img src="https://akwebcode.tk/assets/img/akash-avtar.png" width="30" height="30"
+                class="d-inline-block align-top" alt="">
+            Akash's Code
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="https://akwebcode.tk">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Me</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact Us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid col-lg-8 col-xl-8 col-xxl-8">
+
+        <div class="mt-3">
+            <label for="googleDriveLink" class="form-label">Paste Google Drive Link</label>
+            <input type="text" class="form-control" id="googleDriveLink" aria-describedby="gdrive">
+            <button type="submit" onclick="generateDownlodLinks()" class="btn btn-primary mt-3">Generate Download
+                Link</button>
+        </div>
+        <div class="mt-3 d-none" id="generatedLinksBox">
+            <input type="text" class="form-control" id="generateLinks" aria-describedby="generateLinks">
+            <div class="alert alert-success d-none mt-3" role="alert" id="successBox">
+                Successfully generated Download Link
+            </div>
+            <button type="submit" onclick="copyLink()" class="btn btn-success">Copy Link</button>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-3 d-none col-lg-8 col-xl-8 col-xxl-8" id="alertbox">
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <div><b>Invalid URL</b></div>
+        </div>
+    </div>
+    <script>
+        var generateLinks = document.getElementById("generateLinks")
+        var generatedLinksBox = document.getElementById("generatedLinksBox")
+        var successBox = document.getElementById("successBox")
+        var alertbox = document.getElementById("alertbox")
+        function generateDownlodLinks() {
+            var googleDriveLink = document.getElementById("googleDriveLink").value
+            alertbox.classList.add("d-none")
+            // generatedLinksBox.add("d-none")
+            successBox.innerText = "Successfully generated Download Link"
+            if (googleDriveLink.includes("drive.google.com/file/d") || googleDriveLink.includes("drive.google.com/open?id")) {
+                var ID_REGEX = /(?:drive.google(?:-nocookie)?\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:d)?)\/|\S*?[?&]id=))([a-zA-Z0-9_-]{33})/
+                const extractedID = googleDriveLink.match(ID_REGEX)[1];
+                const downloadLink = "https://drive.google.com/uc?id=" + extractedID
+                generatedLinksBox.classList.remove("d-none")
+                generateLinks.value = downloadLink;
+                successBox.classList.remove("d-none")
+                generateLinks.select();
+                console.log(extractedID)
+            } else {
+                alertbox.classList.remove("d-none")
+                generatedLinksBox.classList.add("d-none")
+            }
+        }
+        function copyLink() {
+            generateLinks.select();
+            document.execCommand("copy");
+            successBox.innerText = "Link Copied"
+        }
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
